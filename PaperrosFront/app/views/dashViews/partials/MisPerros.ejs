@@ -1,0 +1,46 @@
+<input type="hidden" id="id" name="id" class="form-control" value="<%= email %>">
+<h1 class="display-1 text-titulo text-center">MIS PERROS</h1>
+<div class="container">
+    <div class="row">
+        <%# perroId es una variable acumulador para crear Ids unicos para cada campo y poder operarlos de forma correcta %>
+        <% let perroId = 0; %>
+        <%# Este forEach trae todos los perros del usuario. Ej: "usuario.perros[3].nombre" %>
+        <%# "usuario.perros[i].raza" equivale a "element.raza" %>
+        <% usuario.perros.forEach((element)=>{ %>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card">
+                <!--ACA VA A IR UN INCLUDE DE LA FOTO DEL PERRO-->
+                <img class="card-img-top" src="<%= element.imagen!=undefined ? element.imagen : '/v1/img/logo.png ' %>" height="300px" alt="Perro <%= element.nombre %>">
+                <div class="card-body">
+                    <!--Nombre del perro-->
+                    <p class="aBarra"><b><%= element.nombre %></b></p>
+                    <!--Raza del perro-->
+                    <p class="card-text"><b>Raza: </b><%= element.raza %></p>
+                    <!--Comportamiento del perro-->
+                    <p class="card-text"><b>Comportamiento: </b><%= element.comportamiento %></p>
+                     <!--Estatura del perro-->
+                    <p class="card-text"><b>Estatura: </b><%= element.estatura %> Cm</p>
+                    <!--Peso del perro-->
+                    <p class="card-text"><b>Peso: </b><%= element.peso %> Kg</p>
+                    <!--Vacunas del perro-->
+                    <p class="card-text"><b>Vacunas: </b><%= element.vacunas %></p>
+                    <!--Datos del perro-->
+                    <input type="hidden" id="perro<%= perroId %>" name="perro" class="form-control" value="<%= JSON.stringify(element) %>">
+                    
+                    <!--Botón de editar perro-->
+                    <!--<a href="#" class="btn btn-primary aBotonCarta1">EDITAR</a>-->
+                    <!--Botón de borrar perro: la función eliminarperro(perroId) pertenece al script /js/eliminarMensaje.js-->
+                </div>
+                    <button class="btn btn-primary aBotonCarta1" id="btnBorrar" onclick="eliminarPerro(<%= perroId %>)">ELIMINAR</button>                    
+                </div>
+            </div>
+        <% perroId++ %>
+        <% }); %>
+
+        <div class="BotonAñadir">
+            <a href="/v1/dueno/AnadirPerro">
+                <img src="/v1/img/añadirIcono.png" height="100" width="100">
+            </a>
+        </div>
+    </div>
+</div>
